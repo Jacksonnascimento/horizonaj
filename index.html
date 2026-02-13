@@ -120,6 +120,7 @@
             align-items: center;
             gap: 8px;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            white-space: nowrap; /* Impede que o texto quebre em duas linhas */
         }
 
         .btn-premium::before {
@@ -427,11 +428,28 @@
         .footer-col a:hover { color: var(--primary); }
         .copyright { text-align: center; color: var(--text-muted); padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; }
 
-        /* Responsividade */
+        /* Responsividade Principal */
         @media (max-width: 900px) {
             .hero h1 { font-size: 2.8rem; }
             .nav-links { display: none; }
             .product-grid, .founders-list, .contact-grid, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        /* --- AJUSTE ESPECIAL MOBILE (CORREÇÃO DO BOTÃO) --- */
+        @media (max-width: 600px) {
+            .container { padding: 0 16px; } /* Ganha espaço nas laterais */
+            
+            .logo { font-size: 1.25rem; }
+            
+            .btn-premium {
+                padding: 8px 12px; /* Reduz drasticamente o padding lateral */
+                font-size: 0.75rem; /* Fonte menor */
+            }
+            
+            /* Esconde o ícone da seta no mobile para caber o texto "INICIAR PROJETO" sem quebrar */
+            .btn-premium .material-icons-round {
+                display: none; 
+            }
         }
     </style>
 </head>
