@@ -620,10 +620,6 @@
                     <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 25px;">Solicitar Proposta</h3>
                     
                     <form id="project-form">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_subject" value="Novo Lead: Site Horizon AJ">
-
                         <div class="form-group">
                             <label class="form-label">Nome Completo</label>
                             <input type="text" name="name" class="form-input" placeholder="Seu nome" required>
@@ -632,6 +628,11 @@
                         <div class="form-group">
                             <label class="form-label">E-mail Corporativo</label>
                             <input type="email" name="email" class="form-input" placeholder="seu@empresa.com.br" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">WhatsApp / Telefone</label>
+                            <input type="tel" name="whatsapp" class="form-input" placeholder="(11) 99999-9999" maxlength="15" required>
                         </div>
 
                         <div class="form-group">
@@ -690,9 +691,23 @@
     <script>
         AOS.init({ duration: 800, once: true });
 
-        // Lógica de Envio via AJAX para o FormSubmit
         const form = document.getElementById('project-form');
-        
+
+        // --- MÁSCARA DE WHATSAPP ---
+        const whatsappInput = form.querySelector('input[name="whatsapp"]');
+
+        whatsappInput.addEventListener('input', function (e) {
+            let v = e.target.value.replace(/\D/g, ""); // Remove tudo o que não é dígito
+            v = v.substring(0, 11); // Limita a 11 dígitos
+
+            // Aplica a formatação (XX) XXXXX-XXXX
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); 
+            v = v.replace(/(\d{5})(\d)/, "$1-$2");
+
+            e.target.value = v;
+        });
+
+        // --- LÓGICA DE ENVIO ---
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = form.querySelector('.btn-submit');
@@ -703,32 +718,55 @@
             btn.style.opacity = '0.7';
             btn.disabled = true;
 
-            // Coleta dos dados
+            // Coleta dos dados do formulário
             const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const whatsapp = formData.get('whatsapp');
+            const service = formData.get('service');
+            const message = formData.get('message');
 
-            // 2. Envio via Fetch para o FormSubmit (endpoint público)
-            fetch("https://formsubmit.co/ajax/contato@horizonaj.com.br", {
+            // Montagem da String "Reason" concatenada
+            const concatenatedReason = `[Site Institucional] Interesse: ${service}. Detalhes: ${message}`;
+
+            // Montagem do Payload JSON
+            const payload = {
+                name: name,
+                email: email,
+                whatsapp: whatsapp, 
+                reason: concatenatedReason
+            };
+
+            // 2. Envio via Fetch para o sistema Condigtal
+            fetch("https://residencialjardins.condigtal.com.br/public/leads", {
                 method: "POST",
-                body: formData
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Sucesso
-                btn.innerText = 'SUCESSO! E-MAIL ENVIADO.';
-                btn.style.background = 'var(--accent)'; 
-                form.reset();
-                
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.background = ''; // Reseta cor
-                    btn.style.opacity = '1';
-                    btn.disabled = false;
-                }, 4000);
+            .then(response => {
+                if (response.ok) {
+                    // Sucesso
+                    btn.innerText = 'SUCESSO! RECEBEMOS SEU CONTATO.';
+                    btn.style.background = 'var(--accent)'; 
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.style.background = ''; // Reseta cor
+                        btn.style.opacity = '1';
+                        btn.disabled = false;
+                    }, 4000);
+                } else {
+                    // Erro
+                    throw new Error('Erro na resposta do servidor');
+                }
             })
             .catch(error => {
-                // Erro
                 console.error('Erro:', error);
-                btn.innerText = 'ERRO AO ENVIAR. TENTE WHATSAPP.';
+                btn.innerText = 'ERRO. TENTE PELO WHATSAPP.';
                 btn.style.background = '#ef4444'; // Vermelho
                 
                 setTimeout(() => {
