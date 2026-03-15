@@ -6,6 +6,9 @@
     <meta name="description" content="Horizon AJ - Software House especializada em Desenvolvimento Java, Python e DBA SQL Server/PostgreSQL.">
     <title>Horizon AJ | High-Performance Software House</title>
     
+    <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png?v=3">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +47,6 @@
 
         html { scroll-behavior: smooth; }
 
-        /* CORREÇÃO DE OVERFLOW: Impede scroll horizontal e página "dançando" */
         html, body {
             width: 100%;
             max-width: 100%;
@@ -52,7 +54,7 @@
             color: var(--text-main);
             font-family: var(--font-body);
             line-height: 1.6;
-            overflow-x: hidden; /* Importante para cortar animações laterais */
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -84,18 +86,18 @@
         }
 
         .logo {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: -0.03em;
             display: flex;
             align-items: center;
-            gap: 6px;
         }
-        
-        .logo span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 40px; }
+        /* --- LOGÓTIPO AINDA MAIOR --- */
+        .logo-img {
+            height: 70px; /* Tamanho consideravelmente maior para Desktop */
+            width: auto;
+            transition: height 0.3s ease;
+        }
+
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         
         .nav-links a {
             font-size: 0.9rem;
@@ -105,7 +107,6 @@
         
         .nav-links a:hover { color: var(--text-main); }
 
-        /* Botão Premium (Neon Fill) */
         .btn-premium {
             position: relative;
             padding: 10px 28px;
@@ -170,7 +171,6 @@
 
         .hero h1 {
             font-family: var(--font-display);
-            /* Ajuste responsivo do título */
             font-size: clamp(2rem, 5vw, 4.2rem);
             font-weight: 700;
             line-height: 1.1;
@@ -236,7 +236,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1px;
-            background: var(--border); /* Linhas da grade */
+            background: var(--border); 
             border: 1px solid var(--border);
         }
 
@@ -297,7 +297,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top; /* Pulo do gato: mostra o topo do sistema */
+            object-position: top; 
             opacity: 0.9;
             transition: 0.5s;
         }
@@ -346,11 +346,10 @@
         .founder-img {
             width: 100%; height: 100%;
             object-fit: cover;
-            filter: grayscale(100%); /* Efeito Preto e Branco Profissional */
+            filter: grayscale(100%);
             transition: 0.4s;
         }
         
-        /* Ajuste fino do crop */
         .founder-img.anderson { object-position: center 20%; }
         .founder-img.jackson { object-position: center 15%; }
 
@@ -360,7 +359,7 @@
         .founder-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
         .founder-bio { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* --- 8. CONTACT SECTION (HÍBRIDA) --- */
+        /* --- 8. CONTACT SECTION --- */
         .contact-section {
             padding: 100px 0;
             background: linear-gradient(180deg, var(--bg-body) 0%, #0c0f16 100%);
@@ -395,7 +394,6 @@
         }
         .btn-whatsapp:hover { background: #1da851; box-shadow: 0 0 20px rgba(37, 211, 102, 0.3); }
 
-        /* Form Estilizado */
         .form-box {
             background: var(--bg-card); padding: 40px; border-radius: 16px;
             border: 1px solid var(--border);
@@ -442,18 +440,20 @@
             .product-grid, .founders-list, .contact-grid, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
         }
 
-        /* --- AJUSTE ESPECIAL MOBILE (CORREÇÃO DO BOTÃO E LOGO) --- */
+        /* --- AJUSTE ESPECIAL MOBILE --- */
         @media (max-width: 600px) {
             .container { padding: 0 20px; } 
             
-            .logo { font-size: 1.15rem; }
-            
+            /* Logótipo maior também nos telemóveis */
+            .logo-img {
+                height: 60px; 
+            }
+
             .btn-premium {
-                padding: 8px 16px; /* Padding menor */
-                font-size: 0.7rem; /* Fonte menor */
+                padding: 8px 16px;
+                font-size: 0.7rem;
             }
             
-            /* Esconde ícone no mobile para caber o texto */
             .btn-premium .material-icons-round {
                 display: none; 
             }
@@ -465,7 +465,7 @@
     <header>
         <div class="container nav-container">
             <a href="#" class="logo">
-                HORIZON<span>AJ</span>
+                <img src="images/horizon.png" alt="Horizon AJ Desenvolvimento" class="logo-img">
             </a>
             
             <nav class="nav-links">
@@ -673,7 +673,7 @@
 
                         <div class="form-group">
                             <label class="form-label">Detalhes do Projeto</label>
-                            <textarea name="message" class="form-textarea" rows="4" placeholder="Conte um pouco sobre o que você precisa..."></textarea>
+                            <textarea name="message" class="form-textarea" rows="4" placeholder="Conte um pouco sobre o que precisa..."></textarea>
                         </div>
 
                         <button type="submit" class="btn-submit">Enviar Solicitação</button>
@@ -688,7 +688,9 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="logo" style="margin-bottom: 20px;">HORIZON<span>AJ</span></div>
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <img src="images/horizon.png" alt="Horizon AJ Desenvolvimento" class="logo-img">
+                    </div>
                     <p style="color: var(--text-muted);">Engenharia de software de alta performance.</p>
                 </div>
                 
@@ -722,10 +724,9 @@
         const whatsappInput = form.querySelector('input[name="whatsapp"]');
 
         whatsappInput.addEventListener('input', function (e) {
-            let v = e.target.value.replace(/\D/g, ""); // Remove tudo o que não é dígito
-            v = v.substring(0, 11); // Limita a 11 dígitos
+            let v = e.target.value.replace(/\D/g, "");
+            v = v.substring(0, 11);
 
-            // Aplica a formatação (XX) XXXXX-XXXX
             v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); 
             v = v.replace(/(\d{5})(\d)/, "$1-$2");
 
@@ -738,12 +739,10 @@
             const btn = form.querySelector('.btn-submit');
             const originalText = btn.innerText;
             
-            // 1. Feedback Visual Imediato
             btn.innerText = 'ENVIANDO...';
             btn.style.opacity = '0.7';
             btn.disabled = true;
 
-            // Coleta dos dados do formulário
             const formData = new FormData(form);
             const name = formData.get('name');
             const email = formData.get('email');
@@ -751,10 +750,8 @@
             const service = formData.get('service');
             const message = formData.get('message');
 
-            // Montagem da String "Reason" concatenada
             const concatenatedReason = `[Site Institucional] Interesse: ${service}. Detalhes: ${message}`;
 
-            // Montagem do Payload JSON
             const payload = {
                 name: name,
                 email: email,
@@ -762,7 +759,6 @@
                 reason: concatenatedReason
             };
 
-            // 2. Envio via Fetch para o sistema Condigtal
             fetch("https://residencialjardins.condigtal.com.br/public/leads", {
                 method: "POST",
                 headers: {
@@ -773,26 +769,24 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // Sucesso
                     btn.innerText = 'SUCESSO! RECEBEMOS SEU CONTATO.';
                     btn.style.background = 'var(--accent)'; 
                     form.reset();
                     
                     setTimeout(() => {
                         btn.innerText = originalText;
-                        btn.style.background = ''; // Reseta cor
+                        btn.style.background = '';
                         btn.style.opacity = '1';
                         btn.disabled = false;
                     }, 4000);
                 } else {
-                    // Erro
                     throw new Error('Erro na resposta do servidor');
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
                 btn.innerText = 'ERRO. TENTE PELO WHATSAPP.';
-                btn.style.background = '#ef4444'; // Vermelho
+                btn.style.background = '#ef4444';
                 
                 setTimeout(() => {
                     btn.innerText = originalText;
